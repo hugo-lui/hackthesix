@@ -2,12 +2,30 @@ import React from "react";
 
 import { useState } from "react";
 
-const SearchBox = () => {
-  const [event, setEvent] = useState("");
-  const [eventArray, setEventArray] = useState({});
+const SearchBox = ({callback}) => {
+  const [gpu, setGpu] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:4000/${gpu}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.log("Form data sent successfully");
+        const responseData = await response.json(); // Parse the response data as JSON
+        callback(responseData);
+      } else {
+        console.error("Form data submission failed");
+      }
+    } catch (error) {
+      console.error("Error sending form data:", error);
+    }
   };
 
   return (
@@ -91,7 +109,7 @@ const SearchBox = () => {
             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
             placeholder="Search for events"
             required
-            onChange={(e) => setEvent(e.target.value)}
+            onChange={(e) => setGpu(e.target.value)}
           />
           <button
             type="submit"
