@@ -5,13 +5,15 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 
 // Util packages
-
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </>
   );
 }
