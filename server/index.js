@@ -16,26 +16,31 @@ app.listen(PORT, () => {
 })
 
 app.get("/:keyword", (req, res) => {
-    res.status(200).json({"urls": res.urls});
+    res.status(200).json({"names": res.names, "prices": res.prices, "urls": res.urls});
 })
 
 app.param("keyword", async (req, res, next, keyword) => {
     try {
-        const endpoint = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${keyword}&source=ticketmaster&countryCode=CA&apikey=${process.env.API_KEY}`;
+        keyword = keyword.replace(" ", "%20");
+        const endpoint = `https://api.bestbuy.com/v1/products(search=${keyword})?format=json&apiKey=${process.env.API_KEY}`;
         const response = await fetch(endpoint);
         if(response.ok) {
             const jsonResponse = await response.json();
+            const names = [];
+            const prices = [];
             const urls = [];
-            const data = jsonResponse._embedded.events;
-            data.forEach((object) => {
-                urls.push(JSON.stringify(object.url));
+            jsonResponse.products.forEach((product) => {
+                names.push(product.name);
+                prices.push(product.regularPrice);
+                urls.push(product.addToCartUrl);
             });
+            res.names = names;
+            res.prices = prices;
             res.urls = urls;
-            console.log(urls);
             next();
         }
     }     
     catch(err) {
-        res.status(400).json({error: err});
+        res.status(400).json({error: "No items found"});
     }
 })
