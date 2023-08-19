@@ -8,7 +8,6 @@ const Home = (props) => {
       <div className="h-screen">
         <HeroBanner/>
       </div>
-
     </div>
     
   );

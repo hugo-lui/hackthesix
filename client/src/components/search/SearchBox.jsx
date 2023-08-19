@@ -4,29 +4,10 @@ import { useState } from "react";
 
 const SearchBox = () => {
   const [event, setEvent] = useState("");
+  const [eventArray, setEventArray] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-        const response = await fetch('http://localhost:4000/:keyword', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ event }), // Send the event data to the server
-        });
-    
-        if (response.ok) {
-          console.log('Form data sent successfully');
-        } else {
-          console.error('Form data submission failed');
-        }
-      } catch (error) {
-        console.error('Error sending form data:', error);
-      }
-
-    console.log(event);
   };
 
   return (

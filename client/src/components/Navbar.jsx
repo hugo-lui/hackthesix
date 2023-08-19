@@ -13,7 +13,7 @@ const Navbar = () => {
             className="text-lg tracking-tight text-black uppercase focus:outline-none focus:ring lg:text-2xl"
           >
             <span className="font-bold tracking-tight dark:text-black">
-              ticketmasterbot
+              gpubot
             </span>
           </a>
           <button
