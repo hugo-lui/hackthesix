@@ -21,7 +21,7 @@ app.get("/:keyword", (req, res) => {
 
 app.param("keyword", async (req, res, next, keyword) => {
     try {
-        const endpoint = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${keyword}&source=ticketmaster&countryCode=CA&apikey=${process.env.API_KEY}`;
+        const endpoint = `https://app.ticketmaster.com/discovery/v2/events.json?size=6&keyword=${keyword}&source=ticketmaster&countryCode=CA&apikey=${process.env.API_KEY}`;
         const response = await fetch(endpoint);
         if(response.ok) {
             const jsonResponse = await response.json();
@@ -36,6 +36,6 @@ app.param("keyword", async (req, res, next, keyword) => {
         }
     }     
     catch(err) {
-        res.status(400).json({error: err});
+        res.status(400).json({error: "No shows found"});
     }
 })
