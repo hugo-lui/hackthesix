@@ -23,7 +23,7 @@ const Search = () => {
 
         {items &&
           items.length > 0 &&
-          items.map((item, index) => <Items key={index} link={item.names} />)}
+          items.names.map((item, index) => <Items />)}
       </div>
       <Items />
     </section>
