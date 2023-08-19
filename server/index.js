@@ -16,7 +16,7 @@ app.listen(PORT, () => {
 })
 
 app.get("/:keyword", (req, res) => {
-    res.status(200).json({"names": res.names, "prices": res.prices});
+    res.status(200).json({"names": res.names, "prices": res.prices, "urls": res.urls});
 })
 
 app.param("keyword", async (req, res, next, keyword) => {
@@ -28,12 +28,15 @@ app.param("keyword", async (req, res, next, keyword) => {
             const jsonResponse = await response.json();
             const names = [];
             const prices = [];
+            const urls = [];
             jsonResponse.products.forEach((product) => {
                 names.push(product.name);
                 prices.push(product.regularPrice);
+                urls.push(product.addToCartUrl);
             });
             res.names = names;
             res.prices = prices;
+            res.urls = urls;
             next();
         }
     }     
