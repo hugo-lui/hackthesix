@@ -31,7 +31,7 @@ app.param("keyword", async (req, res, next, keyword) => {
             const urls = [];
             jsonResponse.products.forEach((product) => {
                 names.push(product.name);
-                prices.push(product.regularPrice);
+                prices.push(product.salePrice);
                 urls.push(product.addToCartUrl);
             });
             res.names = names;
